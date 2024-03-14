@@ -20,6 +20,19 @@ class Product_Controller {
 			next(error);
 		}
 	}
+
+	static async update(req, res, next) {
+		try {
+			const { id } = req.params;
+			const data_products = await Product.findByPk(id);
+			if (!data_products) throw { name: "id_not_found" };
+
+			await data_products.update(req.body, { where: { id } });
+			res.status(200).json(data_products);
+		} catch (error) {
+			next(error);
+		}
+	}
 }
 
 module.exports = Product_Controller;

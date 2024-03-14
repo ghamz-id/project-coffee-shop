@@ -16,6 +16,9 @@ const errorHandler = (err, req, res, next) => {
 		case "user_not_found":
 			res.status(404).json("Please register first");
 			break;
+		case "id_not_found":
+			res.status(404).json("Data not found");
+			break;
 		default:
 			res.status(500).json("internal server error");
 			break;
