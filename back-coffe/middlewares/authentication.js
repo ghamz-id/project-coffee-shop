@@ -4,6 +4,8 @@ const { User } = require("../models");
 const authentication = async (req, res, next) => {
 	try {
 		const { authorization } = req.headers;
+		if (!authorization) throw { name: "invalid_token" };
+
 		const [type, token] = authorization.split(" ");
 		if (type !== "Bearer") throw { name: "invalid_token" };
 
@@ -17,6 +19,7 @@ const authentication = async (req, res, next) => {
 		res.user = user;
 		next();
 	} catch (error) {
+		console.log(error);
 		next(error);
 	}
 };

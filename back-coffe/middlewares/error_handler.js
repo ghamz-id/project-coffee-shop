@@ -1,26 +1,29 @@
 const errorHandler = (err, req, res, next) => {
 	switch (err.name) {
+		case "SequelizeValidationError":
+			res.status(400).json({ msg: err.errors[0].message });
+			break;
 		case "require_email":
-			res.status(400).json("Please insert your email");
+			res.status(400).json({ msg: "Please insert your email" });
 			break;
 		case "require_password":
-			res.status(400).json("Please insert your password");
+			res.status(400).json({ msg: "Please insert your password" });
 			break;
 		case "wrong_password":
-			res.status(401).json("Email or password is wrong");
+			res.status(401).json({ msg: "Email or password is wrong" });
 			break;
 		case "invalid_token":
 		case "JsonWebTokenError":
-			res.status(401).json("Invalid Token");
+			res.status(401).json({ msg: "Invalid Token" });
 			break;
 		case "user_not_found":
-			res.status(404).json("Please register first");
+			res.status(404).json({ msg: "Please register first" });
 			break;
 		case "id_not_found":
-			res.status(404).json("Data not found");
+			res.status(404).json({ msg: "Data not found" });
 			break;
 		default:
-			res.status(500).json("internal server error");
+			res.status(500).json({ msg: "internal server error" });
 			break;
 	}
 };
