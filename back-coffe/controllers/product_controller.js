@@ -25,7 +25,9 @@ class Product_Controller {
 		try {
 			req.body.UserId = res.user.id;
 			await Product.create(req.body);
-			res.status(200).json({ msg: `Success added ${req.body.title}` });
+			res
+				.status(200)
+				.json({ msg: `Success added ${req.body.title}'s product` });
 		} catch (error) {
 			next(error);
 		}
@@ -38,7 +40,9 @@ class Product_Controller {
 			if (!data_products) throw { name: "id_not_found" };
 
 			await data_products.update(req.body, { where: { id } });
-			res.status(200).json({ msg: `Success updated ${req.body.title}` });
+			res
+				.status(200)
+				.json({ msg: `Success updated ${req.body.title}'s product` });
 		} catch (error) {
 			next(error);
 		}
@@ -51,7 +55,7 @@ class Product_Controller {
 			if (!data_products) throw { name: "id_not_found" };
 
 			await data_products.destroy({ where: { id } });
-			res.status(200).json({ msg: `${data_products.title} has been deleted` });
+			res.status(200).json({ msg: `${data_products.title}, has been deleted` });
 		} catch (error) {
 			next(error);
 		}

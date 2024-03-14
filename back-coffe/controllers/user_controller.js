@@ -26,6 +26,15 @@ class User_Controller {
 			next(error);
 		}
 	}
+
+	static async register(req, res, next) {
+		try {
+			await User.create(req.body);
+			res.status(201).json({ msg: `Register ${req.body.username}'s, success` });
+		} catch (error) {
+			next(error);
+		}
+	}
 }
 
 module.exports = User_Controller;
