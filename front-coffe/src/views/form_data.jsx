@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
 export default function Form_Data() {
+	
+
 	return (
 		<>
 			<div className="mt-16 h-screen w-full flex flex-col justify-center items-center">

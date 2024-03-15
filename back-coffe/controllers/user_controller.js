@@ -34,6 +34,7 @@ class User_Controller {
 	static async google_login(req, res, next) {
 		try {
 			const { google_token } = req.body;
+			console.log(google_token);
 			const ticket = await client.verifyIdToken({
 				idToken: google_token,
 				audience: process.env.CLIENT_ID,

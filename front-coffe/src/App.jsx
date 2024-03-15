@@ -22,6 +22,10 @@ const router = createBrowserRouter([
 		},
 		children: [
 			{
+				path: "/home",
+				element: <Home_Page />,
+			},
+			{
 				path: "/products",
 				element: <Product />,
 			},
@@ -31,6 +35,10 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/form",
+				element: <Form_Data />,
+			},
+			{
+				path: "/form/:id",
 				element: <Form_Data />,
 			},
 		],
@@ -43,7 +51,7 @@ const router = createBrowserRouter([
 				element: <Home_Page />,
 				loader: () => {
 					if (localStorage.access_token) {
-						return redirect("/products");
+						return redirect("/home");
 					}
 					return null;
 				},

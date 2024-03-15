@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { BASE_URL } from "../../constants";
-import { c } from "vite/dist/node/types.d-FdqQ54oU";
 
 export default function Form_Login() {
 	// LOGIN BIASA
@@ -33,7 +32,7 @@ export default function Form_Login() {
 
 			localStorage.setItem("access_token", data.access_token);
 			localStorage.setItem("username", data.username);
-			navigate("/products");
+			navigate("/home");
 		} catch (error) {
 			Swal.fire({
 				title: error.response.data.msg,
@@ -49,12 +48,12 @@ export default function Form_Login() {
 			const { data } = await axios({
 				method: "post",
 				url: BASE_URL + "/google-login",
-				data: google_token,
+				data: { google_token },
 			});
 
 			localStorage.setItem("access_token", data.access_token);
 			localStorage.setItem("username", data.username);
-			navigate("/products");
+			navigate("/home");
 		}
 
 		window.onload = function () {

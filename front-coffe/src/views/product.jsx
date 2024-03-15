@@ -24,7 +24,6 @@ export default function Product() {
 			});
 		}
 	};
-
 	useEffect(() => {
 		Fetch();
 	}, []);
@@ -55,7 +54,6 @@ export default function Product() {
 			});
 		}
 	};
-
 	useEffect(() => {
 		if (id) Delete();
 	}, [id]);
@@ -72,6 +70,7 @@ export default function Product() {
 						<tr>
 							<th>Title</th>
 							<th>Description</th>
+							<th>Price</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -96,6 +95,7 @@ export default function Product() {
 								<td>
 									<span className="text-sm">{el.description}</span>
 								</td>
+								<td>Rp. {el.price},-</td>
 								<th className="flex flex-col gap-2">
 									<Link
 										to={`/products/${el.id}`}
@@ -103,7 +103,10 @@ export default function Product() {
 									>
 										Delete
 									</Link>
-									<Link to={"/form"} className="btn btn-warning btn-xs">
+									<Link
+										to={`/form/${el.id}`}
+										className="btn btn-warning btn-xs"
+									>
 										{" "}
 										Update{" "}
 									</Link>
