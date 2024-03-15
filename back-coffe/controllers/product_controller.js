@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Product, Category } = require("../models");
 const midtransClient = require("midtrans-client");
 
@@ -5,7 +6,10 @@ class Product_Controller {
 	// PUBLIC SITE
 	static async pub_findAll(req, res, next) {
 		try {
-			const data_products = await Product.findAll({ include: Category });
+			const data_products = await Product.findAll({
+				include: Category,
+				where: { price: { [Op.gt]: 1000 } },
+			});
 			res.status(200).json(data_products);
 		} catch (error) {
 			next(error);
@@ -15,7 +19,10 @@ class Product_Controller {
 	// NEED AUTHENTICATION FITUR
 	static async findAll(req, res, next) {
 		try {
-			const data_products = await Product.findAll({ include: Category });
+			const data_products = await Product.findAll({
+				include: Category,
+				where: { price: { [Op.gt]: 1000 } },
+			});
 			res.status(200).json(data_products);
 		} catch (error) {
 			next(error);
@@ -36,12 +43,13 @@ class Product_Controller {
 
 	static async add(req, res, next) {
 		try {
-			req.body.UserId = res.user.id;
+			req.body.UserId = req.user.id;
 			await Product.create(req.body);
 			res
 				.status(200)
 				.json({ msg: `Success added ${req.body.title}'s product` });
 		} catch (error) {
+			console.log(error);
 			next(error);
 		}
 	}

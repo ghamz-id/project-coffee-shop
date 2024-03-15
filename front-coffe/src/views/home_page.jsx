@@ -64,7 +64,7 @@ export default function Home_Page() {
 
 	return (
 		<>
-			<div className="h-screen mt-20 grid grid-cols-5 gap-2 mx-24">
+			<div className="h-screen mt-20 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mx-48">
 				{data.map((el) => (
 					<Card el={el} key={el.id} />
 				))}

@@ -68,6 +68,7 @@ export default function Product() {
 					{/* head */}
 					<thead>
 						<tr>
+							<th>No</th>
 							<th>Title</th>
 							<th>Description</th>
 							<th>Price</th>
@@ -75,8 +76,9 @@ export default function Product() {
 						</tr>
 					</thead>
 					<tbody>
-						{data.map((el) => (
+						{data.map((el, i) => (
 							<tr className="hover" key={el.id}>
+								<td>{i + 1}</td>
 								<td>
 									<div className="flex items-center gap-3">
 										<div className="avatar">

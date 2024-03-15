@@ -31,9 +31,11 @@ export default function Avatar() {
 					<li>
 						<Link to={"/home"}>Home</Link>
 					</li>
-					<li>
-						<Link to={"/products"}>Products</Link>
-					</li>
+					{localStorage.username === "admin" && (
+						<li>
+							<Link to={"/products"}>Products</Link>
+						</li>
+					)}
 					<li>
 						<button onClick={Logout}>Logout</button>
 					</li>
