@@ -1,13 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { BASE_URL } from "../../constants";
-import { c } from "vite/dist/node/types.d-FdqQ54oU";
 
-export default function Form_Login() {
-	// LOGIN BIASA
+export default function Form_Register() {
 	const [input, setInput] = useState({
+		username: "",
 		email: "",
 		password: "",
 	});
@@ -27,13 +26,14 @@ export default function Form_Login() {
 		try {
 			const { data } = await axios({
 				method: "post",
-				url: BASE_URL + "/login",
+				url: BASE_URL + "/register",
 				data: input,
 			});
-
-			localStorage.setItem("access_token", data.access_token);
-			localStorage.setItem("username", data.username);
-			navigate("/products");
+			Swal.fire({
+				title: data.msg,
+				icon: "success",
+			});
+			navigate("/");
 		} catch (error) {
 			Swal.fire({
 				title: error.response.data.msg,
@@ -42,46 +42,16 @@ export default function Form_Login() {
 		}
 	};
 
-	// LOGIN GOOGLE
-	useEffect(() => {
-		async function handleCredentialResponse({ credential }) {
-			const google_token = credential;
-			const { data } = await axios({
-				method: "post",
-				url: BASE_URL + "/google-login",
-				data: google_token,
-			});
-
-			localStorage.setItem("access_token", data.access_token);
-			localStorage.setItem("username", data.username);
-			navigate("/products");
-		}
-
-		window.onload = function () {
-			// karna ada interaksi dgn DOM, jadi harus taro di useEffect
-			google.accounts.id.initialize({
-				client_id:
-					"84835869104-app1ea9lob7o3j5ns9pp8noudn7lic0o.apps.googleusercontent.com",
-				callback: handleCredentialResponse,
-			});
-			google.accounts.id.renderButton(
-				document.getElementById("buttonDiv"),
-				{ theme: "outline", size: "large" } // customization attributes
-			);
-			google.accounts.id.prompt(); // also display the One Tap dialog
-		};
-	}, []);
-
 	return (
 		<>
 			{/* You can open the modal using document.getElementById('ID').showModal() method */}
 			<button
-				className="btn btn-success btn-sm text-white"
-				onClick={() => document.getElementById("form_login").showModal()}
+				className="btn btn-outline btn-success btn-sm text-white"
+				onClick={() => document.getElementById("register_form").showModal()}
 			>
-				Login
+				Register
 			</button>
-			<dialog id="form_login" className="modal">
+			<dialog id="register_form" className="modal">
 				<div className="modal-box">
 					<form
 						method="dialog"
@@ -89,7 +59,24 @@ export default function Form_Login() {
 						className="flex flex-col gap-2"
 					>
 						{/* if there is a button in form, it will close the modal */}
-						<h1 className="font-bold tracking-tigh text-xl mb-4">Log In</h1>
+						<h1 className="font-bold tracking-tigh text-xl mb-4">Register</h1>
+						<label className="input input-bordered flex items-center gap-2">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 16 16"
+								fill="currentColor"
+								className="w-4 h-4 opacity-70"
+							>
+								<path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+							</svg>
+							<input
+								type="text"
+								className="grow"
+								placeholder="Username"
+								name="username"
+								onChange={GetInput}
+							/>
+						</label>
 						<label className="input input-bordered flex items-center gap-2">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -130,15 +117,9 @@ export default function Form_Login() {
 							/>
 						</label>
 						<button type="Submit" className="btn btn-primary my-4 w-1/2 m-auto">
-							Continue
+							Register
 						</button>
 					</form>
-					<p className="text-center font-bold">- OR -</p>
-
-					{/* LOGIN SOSMED */}
-					<div id="buttonDiv" className="flex justify-center my-4"></div>
-					{/* END SOSMED */}
-
 					<p className="text-center text-slate-400">
 						By registering, you agree to our{" "}
 						<Link to={"#"} className="text-blue-700">

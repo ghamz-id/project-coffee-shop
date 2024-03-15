@@ -1,24 +1,64 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../../constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function Product() {
+	// FETCH DATA
 	const [data, setData] = useState([]);
 	const Fetch = async (e) => {
 		try {
 			const { data } = await axios({
 				method: "get",
 				url: BASE_URL + "/products",
+				headers: {
+					Authorization: "Bearer " + localStorage.getItem("access_token"),
+				},
 			});
 			setData(data);
 		} catch (error) {
-			console.log(error);
+			Swal.fire({
+				title: error.response.data.msg,
+				icon: "error",
+			});
 		}
 	};
+
 	useEffect(() => {
 		Fetch();
 	}, []);
+
+	// FITUR DELETE
+	const { id } = useParams();
+	const navigate = useNavigate();
+	const Delete = async (e) => {
+		try {
+			const { data } = await axios({
+				method: "delete",
+				url: BASE_URL + "/products/" + id,
+				headers: {
+					Authorization: "Bearer " + localStorage.getItem("access_token"),
+				},
+			});
+			Swal.fire({
+				title: data.msg,
+				icon: "success",
+			});
+
+			Fetch();
+			navigate("/products");
+		} catch (error) {
+			Swal.fire({
+				title: error.response.data.msg,
+				icon: "error",
+			});
+		}
+	};
+
+	useEffect(() => {
+		if (id) Delete();
+	}, [id]);
 
 	return (
 		<>
@@ -57,9 +97,12 @@ export default function Product() {
 									<span className="text-sm">{el.description}</span>
 								</td>
 								<th className="flex flex-col gap-2">
-									<button className="btn btn-error btn-xs text-white">
+									<Link
+										to={`/products/${el.id}`}
+										className="btn btn-error btn-xs text-white"
+									>
 										Delete
-									</button>
+									</Link>
 									<Link to={"/form"} className="btn btn-warning btn-xs">
 										{" "}
 										Update{" "}

@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import Form_Login from "./login-modal";
+import Avatar from "./avatar";
+import Form_Register from "./register-modal";
 
 export default function Navbar() {
 	return (
@@ -43,8 +45,9 @@ export default function Navbar() {
 						</div>
 					</div>
 				</div>
-				<button className="btn btn-outline btn-success btn-sm">Register</button>
-				<Form_Login />
+				{localStorage.access_token && <Avatar />}
+				{!localStorage.access_token && <Form_Register />}
+				{!localStorage.access_token && <Form_Login />}
 			</div>
 		</div>
 	);
