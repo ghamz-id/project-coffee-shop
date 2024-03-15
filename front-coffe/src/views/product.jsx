@@ -1,0 +1,75 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { BASE_URL } from "../../constants";
+import { Link } from "react-router-dom";
+
+export default function Product() {
+	const [data, setData] = useState([]);
+	const Fetch = async (e) => {
+		try {
+			const { data } = await axios({
+				method: "get",
+				url: BASE_URL + "/products",
+			});
+			setData(data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	useEffect(() => {
+		Fetch();
+	}, []);
+
+	return (
+		<>
+			<div className="overflow-x-auto mt-16 w-3/4 m-auto">
+				<Link to={"/form"} className="btn btn-primary my-4 btn-sm">
+					Add Product
+				</Link>
+				<table className="table">
+					{/* head */}
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Description</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{data.map((el) => (
+							<tr className="hover" key={el.id}>
+								<td>
+									<div className="flex items-center gap-3">
+										<div className="avatar">
+											<div className="mask mask-squircle w-16 h-16">
+												<img src={el.image} alt="menu-image" />
+											</div>
+										</div>
+										<div>
+											<div className="font-bold">{el.title}</div>
+											<div className="text-sm opacity-50">
+												{el.Category.name}
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<span className="text-sm">{el.description}</span>
+								</td>
+								<th className="flex flex-col gap-2">
+									<button className="btn btn-error btn-xs text-white">
+										Delete
+									</button>
+									<Link to={"/form"} className="btn btn-warning btn-xs">
+										{" "}
+										Update{" "}
+									</Link>
+								</th>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		</>
+	);
+}
