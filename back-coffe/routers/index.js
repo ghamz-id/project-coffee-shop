@@ -14,6 +14,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/login", User_Controller.login);
+router.post("/google-login", User_Controller.google_login);
 router.post("/register", User_Controller.register);
 
 router.get("/pub-product", Product_Controller.pub_findAll);

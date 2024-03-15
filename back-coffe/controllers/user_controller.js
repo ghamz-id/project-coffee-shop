@@ -2,6 +2,10 @@ const { comparePassword } = require("../helpers/brcypt");
 const { signToken } = require("../helpers/jwt");
 const { User } = require("../models");
 
+// google login
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client();
+
 class User_Controller {
 	static async login(req, res, next) {
 		try {
@@ -23,6 +27,38 @@ class User_Controller {
 				email: user.email,
 			});
 		} catch (error) {
+			next(error);
+		}
+	}
+
+	static async google_login(req, res, next) {
+		try {
+			const { google_token } = req.body;
+			const ticket = await client.verifyIdToken({
+				idToken: google_token,
+				audience: process.env.CLIENT_ID,
+			});
+			const payload = ticket.getPayload();
+
+			const { email, name } = payload;
+			const [user, created] = await User.findOrCreate({
+				where: { email },
+				defaults: {
+					username: name,
+					email: email,
+					password: Math.random().toString(),
+				},
+			});
+
+			// create token
+			const access_token = signToken({ id: user.id });
+			res.status(200).json({
+				access_token: access_token,
+				username: user.username,
+				email: user.email,
+			});
+		} catch (error) {
+			console.log(error);
 			next(error);
 		}
 	}
