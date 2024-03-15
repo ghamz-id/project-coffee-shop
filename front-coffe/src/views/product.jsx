@@ -95,7 +95,13 @@ export default function Product() {
 								<td>
 									<span className="text-sm">{el.description}</span>
 								</td>
-								<td>Rp. {el.price},-</td>
+								<td>
+									{" "}
+									{new Intl.NumberFormat("id-ID", {
+										style: "currency",
+										currency: "IDR",
+									}).format(el.price)}
+								</td>
 								<th className="flex flex-col gap-2">
 									<Link
 										to={`/products/${el.id}`}

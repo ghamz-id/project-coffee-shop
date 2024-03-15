@@ -1,4 +1,5 @@
 const { Product, Category } = require("../models");
+const midtransClient = require("midtrans-client");
 
 class Product_Controller {
 	// PUBLIC SITE
@@ -68,6 +69,38 @@ class Product_Controller {
 
 			await data_products.destroy({ where: { id } });
 			res.status(200).json({ msg: `${data_products.title}, has been deleted` });
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	static async payment(req, res, next) {
+		try {
+			const { id } = req.params;
+			const order = await Product.findByPk(id);
+			if (!order) throw { name: "id_not_found" };
+
+			let snap = new midtransClient.Snap({
+				isProduction: false,
+				serverKey: process.env.SERVER_KEY,
+			});
+
+			let parameter = {
+				transaction_details: {
+					order_id:
+						"TRANSACTION-" + Math.floor(order.price + Math.random() * 90_000),
+					gross_amount: order.price,
+				},
+				credit_card: {
+					secure: true,
+				},
+				customer_details: {
+					username: req.user.username,
+					email: req.user.email,
+				},
+			};
+			const midtrans_token = await snap.createTransaction(parameter);
+			res.status(201).json(midtrans_token);
 		} catch (error) {
 			next(error);
 		}

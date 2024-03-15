@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const midtransClient = require("midtrans-client");
 
 const products = require("../routers/product");
 const cateogry = require("../routers/category");
@@ -9,7 +8,6 @@ const Product_Controller = require("../controllers/product_controller");
 const User_Controller = require("../controllers/user_controller");
 const authentication = require("../middlewares/authentication");
 const Category_Controller = require("../controllers/category_controller");
-const Payment_Controller = require("../controllers/payment_controller");
 
 router.get("/", (req, res) => {
 	res.json("Hello World!");
@@ -24,7 +22,6 @@ router.get("/pub-category", Category_Controller.pub_findAll);
 
 // Need authentication
 router.use(authentication);
-router.post("/payment", Payment_Controller.payment); // payment gateway
 router.use("/products", products);
 router.use("/category", cateogry);
 

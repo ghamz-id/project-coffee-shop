@@ -10,6 +10,7 @@ import store from "./store";
 import MainLayout from "./components/mainLayout";
 import Product from "./views/product";
 import Form_Data from "./views/form_data";
+import Public from "./views/public";
 
 const router = createBrowserRouter([
 	{
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "/home",
+				element: <Home_Page />,
+			},
+			{
+				path: "/home/:id",
 				element: <Home_Page />,
 			},
 			{
@@ -48,7 +53,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "/",
-				element: <Home_Page />,
+				element: <Public />,
 				loader: () => {
 					if (localStorage.access_token) {
 						return redirect("/home");

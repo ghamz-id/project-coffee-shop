@@ -4,7 +4,7 @@ const { User } = require("../models");
 const authentication = async (req, res, next) => {
 	try {
 		const { authorization } = req.headers;
-		if (!authorization) throw { name: "invalid_token" };
+		if (!authorization) throw { name: "null_token" };
 
 		const [type, token] = authorization.split(" ");
 		if (type !== "Bearer") throw { name: "invalid_token" };

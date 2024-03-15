@@ -15,6 +15,9 @@ const errorHandler = (err, req, res, next) => {
 		case "wrong_password":
 			res.status(401).json({ msg: "Email or password is wrong" });
 			break;
+		case "null_token":
+			res.status(401).json({ msg: "Please login first" });
+			break;
 		case "invalid_token":
 		case "JsonWebTokenError":
 			res.status(401).json({ msg: "Invalid Token" });

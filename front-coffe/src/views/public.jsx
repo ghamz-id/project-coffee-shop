@@ -3,18 +3,14 @@ import Card from "../components/card";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { BASE_URL } from "../../constants";
-import { useNavigate, useParams } from "react-router-dom";
 
-export default function Home_Page() {
+export default function Public() {
 	const [data, setData] = useState([]);
 	const Fetch = async (e) => {
 		try {
 			const { data } = await axios({
 				method: "get",
-				url: BASE_URL + "/products",
-				headers: {
-					Authorization: "Bearer " + localStorage.getItem("access_token"),
-				},
+				url: BASE_URL + "/pub-product",
 			});
 			setData(data);
 		} catch (error) {
@@ -28,17 +24,13 @@ export default function Home_Page() {
 		Fetch();
 	}, []);
 
-	const { id } = useParams();
 	const Payment = async () => {
 		try {
 			const { data } = await axios({
 				method: "post",
-				url: BASE_URL + `/products/payment/${id}`,
-				headers: {
-					Authorization: "Bearer " + localStorage.getItem("access_token"),
-				},
+				url: BASE_URL + "/payment",
 			});
-			console.log(data);
+
 			window.snap.pay(data.token, {
 				onSuccess: function (result) {
 					/* You may add your own implementation here */
@@ -54,19 +46,11 @@ export default function Home_Page() {
 		}
 	};
 
-	const navigate = useNavigate();
-	useEffect(() => {
-		if (id) {
-			Payment();
-			navigate("/home");
-		}
-	}, [id]);
-
 	return (
 		<>
 			<div className="h-screen mt-20 grid grid-cols-5 gap-2 mx-24">
 				{data.map((el) => (
-					<Card el={el} key={el.id} />
+					<Card el={el} Payment={Payment} key={el.id} />
 				))}
 			</div>
 		</>
