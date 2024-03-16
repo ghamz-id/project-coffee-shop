@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest --runInBand --forceExit --detectOpenHandles --verbose ---coverage",
+    "test": "npx jest --runInBand --forceExit --detectOpenHandles --verbose --coverage",
     "server": "npx nodemon bin/www"
   },
   "keywords": [],

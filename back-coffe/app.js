@@ -1,4 +1,8 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") {
+	//pakai ini hanya utk local
+	require("dotenv").config(); //Install environment env
+}
+
 const cors = require("cors");
 
 const express = require("express");
