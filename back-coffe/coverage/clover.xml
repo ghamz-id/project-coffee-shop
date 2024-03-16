@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1710571228128" clover="3.2.0">
-  <project timestamp="1710571228128" name="All files">
-    <metrics statements="257" coveredstatements="246" conditionals="52" coveredconditionals="44" methods="33" coveredmethods="32" elements="342" coveredelements="322" complexity="0" loc="257" ncloc="257" packages="6" files="16" classes="16"/>
+<coverage generated="1710590441189" clover="3.2.0">
+  <project timestamp="1710590441189" name="All files">
+    <metrics statements="258" coveredstatements="247" conditionals="54" coveredconditionals="45" methods="33" coveredmethods="32" elements="345" coveredelements="324" complexity="0" loc="258" ncloc="258" packages="6" files="16" classes="16"/>
     <package name="back-coffe">
-      <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
       <file name="app.js" path="C:\Users\hamdi\Documents\HCK-068\progres\iProject\coffe_shop\back-coffe\app.js">
-        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="3" type="stmt"/>
-        <line num="2" count="3" type="stmt"/>
-        <line num="4" count="3" type="stmt"/>
-        <line num="5" count="3" type="stmt"/>
+        <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
+        <line num="1" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="3" count="3" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
         <line num="8" count="3" type="stmt"/>
         <line num="9" count="3" type="stmt"/>
         <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
         <line num="13" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
       </file>
     </package>
     <package name="back-coffe.controllers">
