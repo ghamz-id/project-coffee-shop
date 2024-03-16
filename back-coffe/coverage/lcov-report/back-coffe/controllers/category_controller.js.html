@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.66% </span>
+                <span class="strong">93.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/30</span>
+                <span class='fraction'>28/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">39.28% </span>
+                <span class="strong">92.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/28</span>
+                <span class='fraction'>26/28</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -167,41 +167,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -245,35 +245,35 @@ class Category_Controller {
 				.status(201)
 				.json({ msg: `Success added ${req.body.name}'s category` });
 		} catch (error) {
-<span class="cstat-no" title="statement not covered" >			next(error);</span>
+			next(error);
 		}
 	}
 &nbsp;
-<span class="fstat-no" title="function not covered" >	st</span>atic async update(req, res, next) {
-<span class="cstat-no" title="statement not covered" >		try {</span>
-			const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-			const data_category = <span class="cstat-no" title="statement not covered" >await Category.findByPk(id);</span>
-<span class="cstat-no" title="statement not covered" >			if (!data_category) <span class="cstat-no" title="statement not covered" >throw { name: "id_not_found" };</span></span>
+	static async update(req, res, next) {
+		try {
+			const { id } = req.params;
+			const data_category = await Category.findByPk(id);
+			if (!data_category) throw { name: "id_not_found" };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >			await data_category.update(req.body, { where: { id } });</span>
-<span class="cstat-no" title="statement not covered" >			res</span>
+			await data_category.update(req.body, { where: { id } });
+			res
 				.status(200)
 				.json({ msg: `Success updated ${req.body.name}'s category` });
 		} catch (error) {
-<span class="cstat-no" title="statement not covered" >			next(error);</span>
+			next(error);
 		}
 	}
 &nbsp;
-<span class="fstat-no" title="function not covered" >	st</span>atic async delete(req, res, next) {
-<span class="cstat-no" title="statement not covered" >		try {</span>
-			const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-			const data_category = <span class="cstat-no" title="statement not covered" >await Product.findByPk(id);</span>
-<span class="cstat-no" title="statement not covered" >			if (!data_category) <span class="cstat-no" title="statement not covered" >throw { name: "id_not_found" };</span></span>
+	static async delete(req, res, next) {
+		try {
+			const { id } = req.params;
+			const data_category = await Category.findByPk(id);
+			if (!data_category) throw { name: "id_not_found" };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >			await data_category.destroy({ where: { id } });</span>
-<span class="cstat-no" title="statement not covered" >			res.status(200).json({ msg: `${data_category.name}, has been deleted` });</span>
+			await data_category.destroy({ where: { id } });
+			res.status(200).json({ msg: `${data_category.name}, has been deleted` });
 		} catch (error) {
-<span class="cstat-no" title="statement not covered" >			next(error);</span>
+			next(error);
 		}
 	}
 }
@@ -286,7 +286,7 @@ module.exports = Category_Controller;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-16T05:37:38.753Z
+                at 2024-03-16T06:36:56.317Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

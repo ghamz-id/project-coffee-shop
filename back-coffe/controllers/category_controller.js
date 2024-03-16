@@ -58,7 +58,7 @@ class Category_Controller {
 	static async delete(req, res, next) {
 		try {
 			const { id } = req.params;
-			const data_category = await Product.findByPk(id);
+			const data_category = await Category.findByPk(id);
 			if (!data_category) throw { name: "id_not_found" };
 
 			await data_category.destroy({ where: { id } });

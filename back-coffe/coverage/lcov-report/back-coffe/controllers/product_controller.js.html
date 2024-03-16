@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.47% </span>
+                <span class="strong">96% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>39/51</span>
+                <span class='fraction'>48/50</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.59% </span>
+                <span class="strong">95.65% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>36/47</span>
+                <span class='fraction'>44/46</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -180,8 +180,7 @@
 <a name='L115'></a><a href='#L115'>115</a>
 <a name='L116'></a><a href='#L116'>116</a>
 <a name='L117'></a><a href='#L117'>117</a>
-<a name='L118'></a><a href='#L118'>118</a>
-<a name='L119'></a><a href='#L119'>119</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L118'></a><a href='#L118'>118</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -233,7 +232,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -266,19 +264,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -290,10 +286,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -350,7 +348,6 @@ class Product_Controller {
 				.status(201)
 				.json({ msg: `Success added ${req.body.title}'s product` });
 		} catch (error) {
-			console.log(error);
 			next(error);
 		}
 	}
@@ -383,18 +380,18 @@ class Product_Controller {
 		}
 	}
 &nbsp;
-<span class="fstat-no" title="function not covered" >	st</span>atic async payment(req, res, next) {
-<span class="cstat-no" title="statement not covered" >		try {</span>
-			const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-			const order = <span class="cstat-no" title="statement not covered" >await Product.findByPk(id);</span>
-<span class="cstat-no" title="statement not covered" >			if (!order) <span class="cstat-no" title="statement not covered" >throw { name: "id_not_found" };</span></span>
+	static async payment(req, res, next) {
+		try {
+			const { id } = req.params;
+			const order = await Product.findByPk(id);
+			if (!order) throw { name: "id_not_found" };
 &nbsp;
-			let snap = <span class="cstat-no" title="statement not covered" >new midtransClient.Snap({</span>
+			let snap = new midtransClient.Snap({
 				isProduction: false,
 				serverKey: process.env.SERVER_KEY,
 			});
 &nbsp;
-			let parameter = <span class="cstat-no" title="statement not covered" >{</span>
+			let parameter = {
 				transaction_details: {
 					order_id:
 						"TRANSACTION-" + Math.floor(order.price + Math.random() * 90_000),
@@ -408,10 +405,10 @@ class Product_Controller {
 					email: req.user.email,
 				},
 			};
-			const midtrans_token = <span class="cstat-no" title="statement not covered" >await snap.createTransaction(parameter);</span>
-<span class="cstat-no" title="statement not covered" >			res.status(201).json(midtrans_token);</span>
+			const midtrans_token = await snap.createTransaction(parameter);
+			res.status(201).json(midtrans_token);
 		} catch (error) {
-<span class="cstat-no" title="statement not covered" >			next(error);</span>
+			next(error);
 		}
 	}
 }
@@ -424,7 +421,7 @@ module.exports = Product_Controller;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-16T05:37:38.753Z
+                at 2024-03-16T06:36:56.317Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

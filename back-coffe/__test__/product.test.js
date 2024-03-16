@@ -28,6 +28,7 @@ beforeAll(async () => {
 	await Category.bulkCreate([
 		{
 			name: "iced",
+			name: "hot",
 		},
 	]);
 
@@ -60,6 +61,21 @@ describe("Create Products (Need Authen)", () => {
 		expect(res.status).toBe(201);
 		expect(res.body).toHaveProperty("msg", res.body.msg);
 	});
+	test("Forbidden", async () => {
+		let dummyData = {
+			title: "tes1",
+			description: "tes1",
+			image: "tes1",
+			price: 2000,
+			CategoryId: 1,
+		};
+		let res = await req(app)
+			.post("/products")
+			.set("Authorization", `Bearer ${access_client}`)
+			.send(dummyData);
+		expect(res.status).toBe(403);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
 	test("Token null", async () => {
 		let dummyData = {
 			title: "tes1",
@@ -87,6 +103,23 @@ describe("Create Products (Need Authen)", () => {
 			.set("Authorization", `Bearer ${access_token}`)
 			.send(dummyData);
 		expect(res.status).toBe(400);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
+});
+
+describe("Buy Products (Need Authen)", () => {
+	test("Payment success", async () => {
+		let res = await req(app)
+			.post("/products/payment/1")
+			.set("Authorization", `Bearer ${access_token}`);
+		expect(res.status).toBe(201);
+		expect(res.body).toHaveProperty("token", res.body.token);
+	});
+	test("Data not found", async () => {
+		let res = await req(app)
+			.post("/products/payment/20")
+			.set("Authorization", `Bearer ${access_token}`);
+		expect(res.status).toBe(404);
 		expect(res.body).toHaveProperty("msg", res.body.msg);
 	});
 });

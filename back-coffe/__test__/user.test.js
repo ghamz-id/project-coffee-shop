@@ -98,6 +98,17 @@ describe("Register", () => {
 	});
 });
 
+describe("Login Google", () => {
+	test("Success", async () => {
+		let token = {
+			google_token: process.env.GOOGLE_TOKEN,
+		};
+		let res = await req(app).post("/google-login").send(token);
+		expect(res.status).toBe(200);
+		expect(res.body).toHaveProperty("access_token", res.body.access_token);
+	});
+});
+
 // RESET
 afterAll(async () => {
 	await User.destroy({ truncate: true, cascade: true, restartIdentity: true });

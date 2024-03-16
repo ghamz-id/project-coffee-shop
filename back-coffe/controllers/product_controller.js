@@ -49,7 +49,6 @@ class Product_Controller {
 				.status(201)
 				.json({ msg: `Success added ${req.body.title}'s product` });
 		} catch (error) {
-			console.log(error);
 			next(error);
 		}
 	}
