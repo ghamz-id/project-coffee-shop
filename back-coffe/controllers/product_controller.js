@@ -46,7 +46,7 @@ class Product_Controller {
 			req.body.UserId = req.user.id;
 			await Product.create(req.body);
 			res
-				.status(200)
+				.status(201)
 				.json({ msg: `Success added ${req.body.title}'s product` });
 		} catch (error) {
 			console.log(error);

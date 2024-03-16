@@ -1,9 +1,10 @@
 const app = require("../app");
 const req = require("supertest");
-const { User, Product } = require("../models");
+const { User, Product, Category } = require("../models");
 const { signToken } = require("../helpers/jwt");
 
 let access_token; //global token
+let access_client; //global token
 beforeAll(async () => {
 	// SEEDING
 	let user = await User.bulkCreate(
@@ -14,24 +15,84 @@ beforeAll(async () => {
 				role: "admin",
 				password: "admin",
 			},
+			{
+				username: "client",
+				email: "client@mail.com",
+				role: "client",
+				password: "client",
+			},
 		],
 		{ individualHooks: true }
 	); // perlu ada, jika pakai bulkCreate
 
+	await Category.bulkCreate([
+		{
+			name: "iced",
+		},
+	]);
+
 	access_token = signToken({ id: user[0].id });
+	access_client = signToken({ id: user[1].id });
 });
 
 // Process testing
-describe("Products (public - Site)", () => {
-	test("Get all data", async () => {
+describe("Read Products (public - Site)", () => {
+	test("Read success", async () => {
 		let res = await req(app).get("/pub-product");
 		expect(res.status).toBe(200);
 		expect(res.body).toBeInstanceOf(Object);
 	});
 });
 
-describe("Products (Need Authen)", () => {
-	test("Get all data", async () => {
+describe("Create Products (Need Authen)", () => {
+	test("Adding success", async () => {
+		let dummyData = {
+			title: "tes1",
+			description: "tes1",
+			image: "tes1",
+			price: 2000,
+			CategoryId: 1,
+		};
+		let res = await req(app)
+			.post("/products")
+			.set("Authorization", `Bearer ${access_token}`)
+			.send(dummyData);
+		expect(res.status).toBe(201);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
+	test("Token null", async () => {
+		let dummyData = {
+			title: "tes1",
+			description: "tes1",
+			image: "tes1",
+			price: 2000,
+			CategoryId: 1,
+		};
+		let res = await req(app)
+			.post("/products")
+			.set("Authorization", null)
+			.send(dummyData);
+		expect(res.status).toBe(401);
+		expect(res.body.msg).toBe("Invalid Token");
+	});
+	test("Validation error", async () => {
+		let dummyData = {
+			description: "tes1",
+			image: "tes1",
+			price: 2000,
+			CategoryId: 1,
+		};
+		let res = await req(app)
+			.post("/products")
+			.set("Authorization", `Bearer ${access_token}`)
+			.send(dummyData);
+		expect(res.status).toBe(400);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
+});
+
+describe("Read Products (Need Authen)", () => {
+	test("Read success", async () => {
 		let res = await req(app)
 			.get("/products")
 			.set("Authorization", `Bearer ${access_token}`);
@@ -50,7 +111,7 @@ describe("Products (Need Authen)", () => {
 		expect(res.status).toBe(200);
 		expect(res.body).toBeInstanceOf(Object);
 	});
-	test("Failed get data by params", async () => {
+	test("Data not found", async () => {
 		let res = await req(app)
 			.get("/products/20")
 			.set("Authorization", `Bearer ${access_token}`);
@@ -59,7 +120,104 @@ describe("Products (Need Authen)", () => {
 	});
 });
 
+describe("Update Products (Need Authen)", () => {
+	test("Updated success", async () => {
+		let dummyData = {
+			title: "tes1 update",
+			description: "tes1 update",
+			image: "tes1 update",
+			price: 2000,
+			CategoryId: 1,
+		};
+		let res = await req(app)
+			.put("/products/1")
+			.set("Authorization", `Bearer ${access_token}`)
+			.send(dummyData);
+		expect(res.status).toBe(200);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
+	test("Data not found", async () => {
+		let dummyData = {
+			title: "tes1 update",
+			description: "tes1 update",
+			image: "tes1 update",
+			price: 2000,
+			CategoryId: 1,
+		};
+		let res = await req(app)
+			.put("/products/20")
+			.set("Authorization", `Bearer ${access_token}`)
+			.send(dummyData);
+		expect(res.status).toBe(404);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
+	test("Forbidden", async () => {
+		let dummyData = {
+			title: "tes1 update",
+			description: "tes1 update",
+			image: "tes1 update",
+			price: 2000,
+			CategoryId: 1,
+		};
+		let res = await req(app)
+			.put("/products/1")
+			.set("Authorization", `Bearer ${access_client}`)
+			.send(dummyData);
+		expect(res.status).toBe(403);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
+	test("Token null", async () => {
+		let dummyData = {
+			title: "tes1 update",
+			description: "tes1 update",
+			image: "tes1 update",
+			price: 2000,
+			CategoryId: 1,
+		};
+		let res = await req(app)
+			.put("/products/1")
+			.set("Authorization", null)
+			.send(dummyData);
+		expect(res.status).toBe(401);
+		expect(res.body.msg).toBe("Invalid Token");
+	});
+});
+
+describe("Delete Products (Need Authen)", () => {
+	test("Delete success", async () => {
+		let res = await req(app)
+			.delete("/products/1")
+			.set("Authorization", `Bearer ${access_token}`);
+		expect(res.status).toBe(200);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
+	test("Data not found", async () => {
+		let res = await req(app)
+			.delete("/products/20")
+			.set("Authorization", `Bearer ${access_token}`);
+		expect(res.status).toBe(404);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
+	test("Forbidden", async () => {
+		let res = await req(app)
+			.put("/products/1")
+			.set("Authorization", `Bearer ${access_client}`);
+		expect(res.status).toBe(403);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
+	test("Token null", async () => {
+		let res = await req(app).put("/products/1").set("Authorization", null);
+		expect(res.status).toBe(401);
+		expect(res.body.msg).toBe("Invalid Token");
+	});
+});
+
 // RESET
 afterAll(async () => {
 	await User.destroy({ truncate: true, cascade: true, restartIdentity: true });
+	await Category.destroy({
+		truncate: true,
+		cascade: true,
+		restartIdentity: true,
+	});
 });

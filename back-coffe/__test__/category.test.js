@@ -45,6 +45,31 @@ describe("Get data (Need Authen)", () => {
 	});
 });
 
+describe("Adding Category (Need Authen)", () => {
+	test("Adding success", async () => {
+		let dummyData = {
+			name: "hot",
+		};
+		let res = await req(app)
+			.post("/category")
+			.set("Authorization", `Bearer ${access_token}`)
+			.send(dummyData);
+		expect(res.status).toBe(201);
+		expect(res.body).toBeInstanceOf(Object);
+	});
+	test("Token null", async () => {
+		let dummyData = {
+			name: "hot",
+		};
+		let res = await req(app)
+			.post("/category")
+			.set("Authorization", null)
+			.send(dummyData);
+		expect(res.status).toBe(401);
+		expect(res.body).toHaveProperty("msg", res.body.msg);
+	});
+});
+
 // RESET
 afterAll(async () => {
 	await User.destroy({ truncate: true, cascade: true, restartIdentity: true });

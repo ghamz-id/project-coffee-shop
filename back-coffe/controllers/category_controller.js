@@ -33,7 +33,7 @@ class Category_Controller {
 		try {
 			await Category.create(req.body);
 			res
-				.status(200)
+				.status(201)
 				.json({ msg: `Success added ${req.body.name}'s category` });
 		} catch (error) {
 			next(error);
