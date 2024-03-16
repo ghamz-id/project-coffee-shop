@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Card from "../components/card";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -8,11 +8,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetch_product } from "../store/product_slice";
 
 export default function Home_Page() {
+	const [params, setParams] = useState();
 	const dispatch = useDispatch();
 	const { products } = useSelector((state) => state.products);
 	useEffect(() => {
-		dispatch(fetch_product());
+		dispatch(fetch_product(params));
 	}, []);
+
+	const GetParams = (e) => {
+		e.preventDefault();
+		setParams(e.target.value);
+	};
 
 	// ---------------- MIDTRANS ----------------
 	const { id } = useParams();
@@ -28,14 +34,38 @@ export default function Home_Page() {
 			window.snap.pay(data.token, {
 				onSuccess: function (result) {
 					/* You may add your own implementation here */
-					alert("payment success!");
-					console.log(result);
+					const Toast = Swal.mixin({
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 3000,
+						timerProgressBar: true,
+						didOpen: (toast) => {
+							toast.onmouseenter = Swal.stopTimer;
+							toast.onmouseleave = Swal.resumeTimer;
+						},
+					});
+					Toast.fire({
+						icon: "success",
+						title: "Payment success",
+					});
 				},
 			});
 		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "error",
+				title: error.response.data.msg,
 			});
 		}
 	};
@@ -50,7 +80,15 @@ export default function Home_Page() {
 
 	return (
 		<>
-			<div className="mt-20 grid gap-4 justify-center sm:grid-cols-2 sm:mx-10 lg:grid-cols-3 lg:mx-24 xl:grid-cols-4 xl:mx-48">
+			<div className="form-control mt-20 mb-5 max-sm:mx-8 sm:mx-10 lg:mx-24 lg:fixed lg:mx-48 lg:mt-[-72px] z-10">
+				<input
+					type="text"
+					placeholder="Search"
+					className="input input-bordered"
+					onChange={GetParams}
+				/>
+			</div>
+			<div className="grid gap-4 lg:mt-20 justify-center sm:grid-cols-2 sm:mx-10 lg:grid-cols-3 lg:mx-24 xl:grid-cols-4 xl:mx-48">
 				{products.map((el) => (
 					<Card el={el} key={el.id} />
 				))}

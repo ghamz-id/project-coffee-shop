@@ -35,29 +35,52 @@ export function fetch_pub_product() {
 			});
 			dispatch(public_products(data));
 		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "error",
+				title: error.response.data.msg,
 			});
 		}
 	};
 }
 
-export function fetch_product() {
+export function fetch_product(params) {
 	return async (dispatch) => {
 		try {
 			const { data } = await axios({
 				method: "get",
 				url: BASE_URL + "/products",
+				params: params,
 				headers: {
 					Authorization: "Bearer " + localStorage.getItem("access_token"),
 				},
 			});
 			dispatch(products(data));
 		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "error",
+				title: error.response.data.msg,
 			});
 		}
 	};
@@ -76,9 +99,20 @@ export function fetch_product_id(id, setInput) {
 			dispatch(products_id(data));
 			setInput(data);
 		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "error",
+				title: error.response.data.msg,
 			});
 		}
 	};

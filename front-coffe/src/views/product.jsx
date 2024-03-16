@@ -25,17 +25,39 @@ export default function Product() {
 					Authorization: "Bearer " + localStorage.getItem("access_token"),
 				},
 			});
-			Swal.fire({
-				title: data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "success",
+				title: data.msg,
 			});
 
 			dispatch(fetch_product());
 			navigate("/products");
 		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "error",
+				title: error.response.data.msg,
 			});
 		}
 	};
