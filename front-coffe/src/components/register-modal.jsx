@@ -29,15 +29,37 @@ export default function Form_Register() {
 				url: BASE_URL + "/register",
 				data: input,
 			});
-			Swal.fire({
-				title: data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "success",
+				title: data.msg,
 			});
 			navigate("/");
 		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "error",
+				title: error.response.data.msg,
 			});
 		}
 	};
@@ -118,7 +140,7 @@ export default function Form_Register() {
 						<button
 							onClick={Submit}
 							type="Submit"
-							className="btn btn-primary my-4 w-1/2 m-auto"
+							className="btn btn-primary my-4 w-1/2 m-auto btn-circle"
 						>
 							Register
 						</button>

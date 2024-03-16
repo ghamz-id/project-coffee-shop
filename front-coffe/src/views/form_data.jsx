@@ -43,15 +43,37 @@ export default function Form_Data() {
 
 		try {
 			const { data } = await axios(option);
-			Swal.fire({
-				title: data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "success",
+				title: data.msg,
 			});
 			navigate("/products");
 		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "error",
+				title: error.response.data.msg,
 			});
 		}
 	};
@@ -136,7 +158,10 @@ export default function Form_Data() {
 							<option value={"2"}>Hot</option>
 						</select>
 					</div>
-					<button type="Submit" className="btn btn-primary mt-4 w-1/2 m-auto">
+					<button
+						type="Submit"
+						className="btn btn-primary mt-4 w-1/2 m-auto btn-circle"
+					>
 						Submit
 					</button>
 				</form>

@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 
 export default function Card({ el, Payment }) {
 	return (
-		<div className="card max-sm:h-[350px] max-sm:w-[350px] sm:h-[350px] bg-base-100 shadow-xl">
+		<div
+			className="card max-sm:h-[350px] max-sm:w-[350px] sm:h-[350px] bg-base-100 shadow-xl"
+			data-aos="fade-right"
+		>
 			<figure>
 				<img
 					className="mt-[-100px] bg-contain bg-center"
@@ -25,14 +28,14 @@ export default function Card({ el, Payment }) {
 					{!localStorage.access_token ? (
 						<div
 							onClick={Payment}
-							className="btn btn-outline btn-success btn-sm"
+							className="btn btn-outline btn-success btn-sm btn-circle px-8"
 						>
 							buy
 						</div>
 					) : (
 						<Link
 							to={`/home/${el.id}`}
-							className="btn btn-outline btn-success btn-sm"
+							className="btn btn-outline btn-success btn-sm btn-circle px-8"
 						>
 							buy
 						</Link>

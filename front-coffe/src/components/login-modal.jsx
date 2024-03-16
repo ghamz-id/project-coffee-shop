@@ -32,11 +32,37 @@ export default function Form_Login() {
 
 			localStorage.setItem("access_token", data.access_token);
 			localStorage.setItem("username", data.username);
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
+				icon: "success",
+				title: "Signed in successfully",
+			});
 			navigate("/home");
 		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "error",
+				title: error.response.data.msg,
 			});
 		}
 	};
@@ -53,6 +79,21 @@ export default function Form_Login() {
 
 			localStorage.setItem("access_token", data.access_token);
 			localStorage.setItem("username", data.username);
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
+				icon: "success",
+				title: "Signed in successfully",
+			});
 			navigate("/home");
 		}
 
@@ -130,7 +171,7 @@ export default function Form_Login() {
 						<button
 							onClick={Submit}
 							type="Submit"
-							className="btn btn-primary my-4 w-1/2 m-auto"
+							className="btn btn-primary my-4 w-1/2 m-auto btn-circle"
 						>
 							Continue
 						</button>
