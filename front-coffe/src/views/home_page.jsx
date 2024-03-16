@@ -8,16 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetch_product } from "../store/product_slice";
 
 export default function Home_Page() {
-	const [params, setParams] = useState();
+	const [params, setParams] = useState({});
 	const dispatch = useDispatch();
 	const { products } = useSelector((state) => state.products);
 	useEffect(() => {
 		dispatch(fetch_product(params));
-	}, []);
+	}, [params]);
 
 	const GetParams = (e) => {
-		e.preventDefault();
-		setParams(e.target.value);
+		const { name, value } = e.target;
+		setParams({ ...params, [name]: value });
 	};
 
 	// ---------------- MIDTRANS ----------------
@@ -85,6 +85,7 @@ export default function Home_Page() {
 					type="text"
 					placeholder="Search"
 					className="input input-bordered"
+					name="q"
 					onChange={GetParams}
 				/>
 			</div>

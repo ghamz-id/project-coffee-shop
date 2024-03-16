@@ -26,12 +26,13 @@ const slicer = createSlice({
 const { public_products, products, products_id } = slicer.actions;
 
 // ---------------- ASYNC THUNK ----------------
-export function fetch_pub_product() {
+export function fetch_pub_product(params) {
 	return async (dispatch) => {
 		try {
 			const { data } = await axios({
 				method: "get",
 				url: BASE_URL + "/pub-product",
+				params: params,
 			});
 			dispatch(public_products(data));
 		} catch (error) {
