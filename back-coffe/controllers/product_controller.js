@@ -30,7 +30,8 @@ class Product_Controller {
 	// NEED AUTHENTICATION FITUR
 	static async findAll(req, res, next) {
 		try {
-			const data_products = await Product.findAll({
+			let { q } = req.query;
+			let option = {
 				include: {
 					model: Category,
 					attributes: {
@@ -41,7 +42,9 @@ class Product_Controller {
 				attributes: {
 					exclude: ["createdAt", "updatedAt"],
 				},
-			});
+			};
+			if (q) option.where.title = { [Op.iLike]: `%${q}%` };
+			const data_products = await Product.findAll(option);
 			res.status(200).json(data_products);
 		} catch (error) {
 			next(error);
