@@ -53,11 +53,10 @@ export default function Form_Register() {
 			</button>
 			<dialog id="register_form" className="modal">
 				<div className="modal-box">
-					<form
-						method="dialog"
-						onSubmit={Submit}
-						className="flex flex-col gap-2"
-					>
+					<form method="dialog" className="flex flex-col gap-2">
+						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+							✕
+						</button>
 						{/* if there is a button in form, it will close the modal */}
 						<h1 className="font-bold tracking-tigh text-xl mb-4">Register</h1>
 						<label className="input input-bordered flex items-center gap-2">
@@ -116,7 +115,11 @@ export default function Form_Register() {
 								onChange={GetInput}
 							/>
 						</label>
-						<button type="Submit" className="btn btn-primary my-4 w-1/2 m-auto">
+						<button
+							onClick={Submit}
+							type="Submit"
+							className="btn btn-primary my-4 w-1/2 m-auto"
+						>
 							Register
 						</button>
 					</form>

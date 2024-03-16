@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { BASE_URL } from "../../constants";
+import { useDispatch } from "react-redux";
+import { fetch_product_id } from "../store/product_slice";
 
 export default function Form_Data() {
 	const { id } = useParams();
@@ -54,25 +56,11 @@ export default function Form_Data() {
 		}
 	};
 
-	const Fetch = async () => {
-		try {
-			const { data } = await axios({
-				method: "get",
-				url: BASE_URL + `/products/${id}`,
-				headers: {
-					Authorization: "Bearer " + localStorage.getItem("access_token"),
-				},
-			});
-			setInput(data);
-		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
-				icon: "error",
-			});
-		}
-	};
+	const dispatch = useDispatch();
 	useEffect(() => {
-		if (id) Fetch();
+		if (id) {
+			dispatch(fetch_product_id(id, setInput));
+		}
 	}, [id]);
 
 	return (

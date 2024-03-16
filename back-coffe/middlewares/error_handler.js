@@ -32,7 +32,7 @@ const errorHandler = (err, req, res, next) => {
 			res.status(404).json({ msg: "Data not found" });
 			break;
 		default:
-			res.status(500).json({ msg: "internal server error" });
+			res.status(500).json({ msg: "Internal server error" });
 			break;
 	}
 };

@@ -1,37 +1,22 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BASE_URL } from "../../constants";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { fetch_product } from "../store/product_slice";
 
 export default function Product() {
-	// FETCH DATA
-	const [data, setData] = useState([]);
-	const Fetch = async (e) => {
-		try {
-			const { data } = await axios({
-				method: "get",
-				url: BASE_URL + "/products",
-				headers: {
-					Authorization: "Bearer " + localStorage.getItem("access_token"),
-				},
-			});
-			setData(data);
-		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
-				icon: "error",
-			});
-		}
-	};
+	const dispatch = useDispatch();
+	const { products } = useSelector((state) => state.products);
 	useEffect(() => {
-		Fetch();
+		dispatch(fetch_product());
 	}, []);
 
-	// FITUR DELETE
+	// ---------------- DELETE ----------------
 	const { id } = useParams();
 	const navigate = useNavigate();
-	const Delete = async (e) => {
+	const Delete = async () => {
 		try {
 			const { data } = await axios({
 				method: "delete",
@@ -45,7 +30,7 @@ export default function Product() {
 				icon: "success",
 			});
 
-			Fetch();
+			dispatch(fetch_product());
 			navigate("/products");
 		} catch (error) {
 			Swal.fire({
@@ -76,7 +61,7 @@ export default function Product() {
 						</tr>
 					</thead>
 					<tbody>
-						{data.map((el, i) => (
+						{products.map((el, i) => (
 							<tr className="hover" key={el.id}>
 								<td>{i + 1}</td>
 								<td>

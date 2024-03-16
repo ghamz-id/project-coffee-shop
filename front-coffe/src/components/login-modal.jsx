@@ -82,11 +82,10 @@ export default function Form_Login() {
 			</button>
 			<dialog id="form_login" className="modal">
 				<div className="modal-box">
-					<form
-						method="dialog"
-						onSubmit={Submit}
-						className="flex flex-col gap-2"
-					>
+					<form method="dialog" className="flex flex-col gap-2">
+						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+							✕
+						</button>
 						{/* if there is a button in form, it will close the modal */}
 						<h1 className="font-bold tracking-tigh text-xl mb-4">Log In</h1>
 						<label className="input input-bordered flex items-center gap-2">
@@ -128,7 +127,11 @@ export default function Form_Login() {
 								onChange={GetInput}
 							/>
 						</label>
-						<button type="Submit" className="btn btn-primary my-4 w-1/2 m-auto">
+						<button
+							onClick={Submit}
+							type="Submit"
+							className="btn btn-primary my-4 w-1/2 m-auto"
+						>
 							Continue
 						</button>
 					</form>
