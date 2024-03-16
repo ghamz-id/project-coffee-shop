@@ -2,9 +2,13 @@ import { Link } from "react-router-dom";
 
 export default function Card({ el, Payment }) {
 	return (
-		<div className="card h-[400px] bg-base-100 shadow-xl">
+		<div className="card max-sm:h-[350px] max-sm:w-[350px] sm:h-[350px] bg-base-100 shadow-xl">
 			<figure>
-				<img src={el.image} alt="image" />
+				<img
+					className="mt-[-100px] bg-contain bg-center"
+					src={el.image}
+					alt="image"
+				/>
 			</figure>
 			<div className="card-body">
 				<h2 className="card-title">

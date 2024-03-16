@@ -58,7 +58,7 @@ export default function Public() {
 
 	return (
 		<>
-			<div className="h-screen mt-20 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mx-48">
+			<div className="mt-20 grid gap-4 justify-center sm:grid-cols-2 sm:mx-10 lg:grid-cols-3 lg:mx-24 xl:grid-cols-4 xl:mx-48">
 				{data.map((el) => (
 					<Card el={el} Payment={Payment} key={el.id} />
 				))}

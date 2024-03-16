@@ -7,8 +7,16 @@ class Product_Controller {
 	static async pub_findAll(req, res, next) {
 		try {
 			const data_products = await Product.findAll({
-				include: Category,
+				include: {
+					model: Category,
+					attributes: {
+						exclude: ["createdAt", "updatedAt"],
+					},
+				},
 				where: { price: { [Op.gt]: 1000 } },
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
 			});
 			res.status(200).json(data_products);
 		} catch (error) {
@@ -20,8 +28,16 @@ class Product_Controller {
 	static async findAll(req, res, next) {
 		try {
 			const data_products = await Product.findAll({
-				include: Category,
+				include: {
+					model: Category,
+					attributes: {
+						exclude: ["createdAt", "updatedAt"],
+					},
+				},
 				where: { price: { [Op.gt]: 1000 } },
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
 			});
 			res.status(200).json(data_products);
 		} catch (error) {

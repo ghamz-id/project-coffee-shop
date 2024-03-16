@@ -18,7 +18,7 @@ module.exports = {
 		let products = data.map((product) => {
 			product.createdAt = product.updatedAt = new Date();
 			product.UserId = product.CategoryId = 1;
-			product.price = 0;
+			product.price = 10_000;
 			let {
 				title,
 				description,

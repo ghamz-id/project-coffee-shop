@@ -38,7 +38,6 @@ export default function Home_Page() {
 					Authorization: "Bearer " + localStorage.getItem("access_token"),
 				},
 			});
-			console.log(data);
 			window.snap.pay(data.token, {
 				onSuccess: function (result) {
 					/* You may add your own implementation here */
@@ -64,7 +63,7 @@ export default function Home_Page() {
 
 	return (
 		<>
-			<div className="h-screen mt-20 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mx-48">
+			<div className="mt-20 grid gap-4 justify-center sm:grid-cols-2 sm:mx-10 lg:grid-cols-3 lg:mx-24 xl:grid-cols-4 xl:mx-48">
 				{data.map((el) => (
 					<Card el={el} key={el.id} />
 				))}
