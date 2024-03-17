@@ -6,6 +6,9 @@ const errorHandler = (err, req, res, next) => {
 		case "SequelizeUniqueConstraintError":
 			res.status(400).json({ msg: "Email already exist" });
 			break;
+		case "file_empty":
+			res.status(400).json({ msg: "Please insert your file" });
+			break;
 		case "require_email":
 			res.status(400).json({ msg: "Please insert your email" });
 			break;
