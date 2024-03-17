@@ -8,10 +8,14 @@ import { fetch_product_id } from "../store/product_slice";
 
 export default function Form_Data() {
 	const { id } = useParams();
+	const [file, setFile] = useState(null);
+	const getImage = (e) => {
+		const image = e.target.files[0];
+		setFile(image);
+	};
 	const [input, setInput] = useState({
 		title: "",
 		description: "",
-		image: "",
 		price: "",
 		CategoryId: "",
 	});
@@ -28,10 +32,16 @@ export default function Form_Data() {
 	const navigate = useNavigate();
 	const Submit = async (e) => {
 		e.preventDefault();
+		let form_input = new FormData();
+		form_input.append("image", file);
+		form_input.append("title", input.title);
+		form_input.append("description", input.description);
+		form_input.append("price", input.price);
+		form_input.append("CategoryId", input.CategoryId);
 		const option = {
 			method: "post",
 			url: BASE_URL + "/products",
-			data: input,
+			data: form_input,
 			headers: {
 				Authorization: "Bearer " + localStorage.getItem("access_token"),
 			},
@@ -127,12 +137,11 @@ export default function Form_Data() {
 					<label className="input input-bordered flex items-center gap-2">
 						Image
 						<input
-							type="text"
+							type="file"
 							className="grow"
 							placeholder="- image URL"
 							name="image"
-							onChange={getInput}
-							value={input.image}
+							onChange={getImage}
 						/>
 					</label>
 					<div className="flex justify-between gap-2">
