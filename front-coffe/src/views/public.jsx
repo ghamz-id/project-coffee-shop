@@ -4,27 +4,23 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { BASE_URL } from "../../constants";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetch_pub_product } from "../store/product_slice";
 
 export default function Public() {
-	const [data, setData] = useState([]);
-	const Fetch = async (e) => {
-		try {
-			const { data } = await axios({
-				method: "get",
-				url: BASE_URL + "/pub-product",
-			});
-			setData(data);
-		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
-				icon: "error",
-			});
-		}
-	};
+	const [params, setParams] = useState({});
+	const dispatch = useDispatch();
+	const { pub_products } = useSelector((state) => state.products);
 	useEffect(() => {
-		Fetch();
-	}, []);
+		dispatch(fetch_pub_product(params));
+	}, [params]);
 
+	const GetParams = (e) => {
+		const { name, value } = e.target;
+		setParams({ ...params, [name]: value });
+	};
+
+	// ---------------- MIDTRANS ----------------
 	const { id } = useParams();
 	const Payment = async () => {
 		try {
@@ -32,18 +28,27 @@ export default function Public() {
 				method: "post",
 				url: BASE_URL + `/products/payment/${id}`,
 			});
-			console.log(data);
 			window.snap.pay(data.token, {
 				onSuccess: function (result) {
-					/* You may add your own implementation here */
 					alert("payment success!");
 					console.log(result);
 				},
 			});
 		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "error",
+				title: error.response.data.msg,
 			});
 		}
 	};
@@ -58,8 +63,17 @@ export default function Public() {
 
 	return (
 		<>
-			<div className="mt-20 grid gap-4 justify-center sm:grid-cols-2 sm:mx-10 lg:grid-cols-3 lg:mx-24 xl:grid-cols-4 xl:mx-48">
-				{data.map((el) => (
+			<div className="form-control mt-20 mb-5 max-sm:mx-8 sm:mx-10 lg:mx-24 lg:fixed lg:mx-48 lg:mt-[-72px] z-10">
+				<input
+					type="text"
+					placeholder="Search"
+					className="input input-bordered"
+					name="q"
+					onChange={GetParams}
+				/>
+			</div>
+			<div className="grid gap-4 lg:mt-20 justify-center sm:grid-cols-2 sm:mx-10 lg:grid-cols-3 lg:mx-24 xl:grid-cols-4 xl:mx-48">
+				{pub_products.map((el) => (
 					<Card el={el} Payment={Payment} key={el.id} />
 				))}
 			</div>

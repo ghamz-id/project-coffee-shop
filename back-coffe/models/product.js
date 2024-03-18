@@ -41,15 +41,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			image: {
 				type: DataTypes.STRING,
-				allowNull: false,
-				validate: {
-					notNull: {
-						msg: "Image is required",
-					},
-					notEmpty: {
-						msg: "Image is required",
-					},
-				},
 			},
 			price: {
 				type: DataTypes.INTEGER,
@@ -62,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
 						msg: "Price is required",
 					},
 				},
-				defaultValue: 0,
+				defaultValue: 10_000,
 			},
 			UserId: {
 				type: DataTypes.INTEGER,

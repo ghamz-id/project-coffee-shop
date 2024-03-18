@@ -6,6 +6,9 @@ const errorHandler = (err, req, res, next) => {
 		case "SequelizeUniqueConstraintError":
 			res.status(400).json({ msg: "Email already exist" });
 			break;
+		case "file_empty":
+			res.status(400).json({ msg: "Please insert your file" });
+			break;
 		case "require_email":
 			res.status(400).json({ msg: "Please insert your email" });
 			break;
@@ -32,7 +35,7 @@ const errorHandler = (err, req, res, next) => {
 			res.status(404).json({ msg: "Data not found" });
 			break;
 		default:
-			res.status(500).json({ msg: "internal server error" });
+			res.status(500).json({ msg: "Internal server error" });
 			break;
 	}
 };

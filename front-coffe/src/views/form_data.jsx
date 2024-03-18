@@ -3,13 +3,19 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { BASE_URL } from "../../constants";
+import { useDispatch } from "react-redux";
+import { fetch_product_id } from "../store/product_slice";
 
 export default function Form_Data() {
 	const { id } = useParams();
+	const [file, setFile] = useState(null);
+	const getImage = (e) => {
+		const image = e.target.files[0];
+		setFile(image);
+	};
 	const [input, setInput] = useState({
 		title: "",
 		description: "",
-		image: "",
 		price: "",
 		CategoryId: "",
 	});
@@ -26,10 +32,16 @@ export default function Form_Data() {
 	const navigate = useNavigate();
 	const Submit = async (e) => {
 		e.preventDefault();
+		let form_input = new FormData();
+		form_input.append("image", file);
+		form_input.append("title", input.title);
+		form_input.append("description", input.description);
+		form_input.append("price", input.price);
+		form_input.append("CategoryId", input.CategoryId);
 		const option = {
 			method: "post",
 			url: BASE_URL + "/products",
-			data: input,
+			data: form_input,
 			headers: {
 				Authorization: "Bearer " + localStorage.getItem("access_token"),
 			},
@@ -41,38 +53,46 @@ export default function Form_Data() {
 
 		try {
 			const { data } = await axios(option);
-			Swal.fire({
-				title: data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "success",
+				title: data.msg,
 			});
 			navigate("/products");
 		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				},
+			});
+			Toast.fire({
 				icon: "error",
+				title: error.response.data.msg,
 			});
 		}
 	};
 
-	const Fetch = async () => {
-		try {
-			const { data } = await axios({
-				method: "get",
-				url: BASE_URL + `/products/${id}`,
-				headers: {
-					Authorization: "Bearer " + localStorage.getItem("access_token"),
-				},
-			});
-			setInput(data);
-		} catch (error) {
-			Swal.fire({
-				title: error.response.data.msg,
-				icon: "error",
-			});
-		}
-	};
+	const dispatch = useDispatch();
 	useEffect(() => {
-		if (id) Fetch();
+		if (id) {
+			dispatch(fetch_product_id(id, setInput));
+		}
 	}, [id]);
 
 	return (
@@ -117,12 +137,11 @@ export default function Form_Data() {
 					<label className="input input-bordered flex items-center gap-2">
 						Image
 						<input
-							type="text"
+							type="file"
 							className="grow"
 							placeholder="- image URL"
 							name="image"
-							onChange={getInput}
-							value={input.image}
+							onChange={getImage}
 						/>
 					</label>
 					<div className="flex justify-between gap-2">
@@ -148,7 +167,10 @@ export default function Form_Data() {
 							<option value={"2"}>Hot</option>
 						</select>
 					</div>
-					<button type="Submit" className="btn btn-primary mt-4 w-1/2 m-auto">
+					<button
+						type="Submit"
+						className="btn btn-primary mt-4 w-1/2 m-auto btn-circle"
+					>
 						Submit
 					</button>
 				</form>

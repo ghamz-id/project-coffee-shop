@@ -2,14 +2,33 @@ const { Op } = require("sequelize");
 const { Product, Category } = require("../models");
 const midtransClient = require("midtrans-client");
 
+// SDK initialization
+const ImageKit = require("imagekit");
+let imagekit = new ImageKit({
+	publicKey: process.env.IMG_PUBLIC_KEY,
+	privateKey: process.env.IMG_PRIVATE_KEY,
+	urlEndpoint: process.env.IMG_URL_ENDPOINT,
+});
+
 class Product_Controller {
 	// PUBLIC SITE
 	static async pub_findAll(req, res, next) {
 		try {
-			const data_products = await Product.findAll({
-				include: Category,
+			let { q } = req.query;
+			let option = {
+				include: {
+					model: Category,
+					attributes: {
+						exclude: ["createdAt", "updatedAt"],
+					},
+				},
 				where: { price: { [Op.gt]: 1000 } },
-			});
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
+			};
+			if (q) option.where.title = { [Op.iLike]: `%${q}%` };
+			const data_products = await Product.findAll(option);
 			res.status(200).json(data_products);
 		} catch (error) {
 			next(error);
@@ -19,10 +38,21 @@ class Product_Controller {
 	// NEED AUTHENTICATION FITUR
 	static async findAll(req, res, next) {
 		try {
-			const data_products = await Product.findAll({
-				include: Category,
+			let { q } = req.query;
+			let option = {
+				include: {
+					model: Category,
+					attributes: {
+						exclude: ["createdAt", "updatedAt"],
+					},
+				},
 				where: { price: { [Op.gt]: 1000 } },
-			});
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
+			};
+			if (q) option.where.title = { [Op.iLike]: `%${q}%` };
+			const data_products = await Product.findAll(option);
 			res.status(200).json(data_products);
 		} catch (error) {
 			next(error);
@@ -44,6 +74,23 @@ class Product_Controller {
 	static async add(req, res, next) {
 		try {
 			req.body.UserId = req.user.id;
+			let { file } = req;
+			if (!file) throw { name: "file_empty" };
+			let base64Img = file.buffer.toString("base64"); // format base64
+			let imageUrl = `data:${file.mimetype};base64,${base64Img}`; // format Data URL
+
+			const upload = await imagekit.upload({
+				file: imageUrl, //required
+				fileName: "my_file_name.jpg", //required
+				extensions: [
+					{
+						name: "google-auto-tagging",
+						maxTags: 5,
+						minConfidence: 95,
+					},
+				],
+			});
+			req.body.image = upload.url;
 			await Product.create(req.body);
 			res
 				.status(201)
@@ -59,6 +106,23 @@ class Product_Controller {
 			const data_products = await Product.findByPk(id);
 			if (!data_products) throw { name: "id_not_found" };
 
+			let { file } = req;
+			if (!file) throw { name: "file_empty" };
+			let base64Img = file.buffer.toString("base64"); // format base64
+			let imageUrl = `data:${file.mimetype};base64,${base64Img}`; // format Data URL
+
+			const upload = await imagekit.upload({
+				file: imageUrl, //required
+				fileName: "my_file_name.jpg", //required
+				extensions: [
+					{
+						name: "google-auto-tagging",
+						maxTags: 5,
+						minConfidence: 95,
+					},
+				],
+			});
+			req.body.image = upload.url;
 			await data_products.update(req.body, { where: { id } });
 			res
 				.status(200)

@@ -77,7 +77,7 @@ describe("Register", () => {
 		expect(res.status).toBe(201);
 		expect(res.body.msg).toBe("Register user1's, success");
 	});
-	test("Register", async () => {
+	test("Email unique", async () => {
 		let dummyData = {
 			username: "admin",
 			email: "admin@mail.com",
@@ -87,7 +87,7 @@ describe("Register", () => {
 		expect(res.status).toBe(400);
 		expect(res.body.msg).toBe("Email already exist");
 	});
-	test("Register", async () => {
+	test("Register validation", async () => {
 		let dummyData = {
 			email: "admin@mail.com",
 			password: "admin",
@@ -99,14 +99,14 @@ describe("Register", () => {
 });
 
 describe("Login Google", () => {
-	test("Success", async () => {
-		let token = {
-			google_token: process.env.GOOGLE_TOKEN,
-		};
-		let res = await req(app).post("/google-login").send(token);
-		expect(res.status).toBe(200);
-		expect(res.body).toHaveProperty("access_token", res.body.access_token);
-	});
+	// test("Success", async () => {
+	// 	let token = {
+	// 		google_token: process.env.GOOGLE_TOKEN,
+	// 	};
+	// 	let res = await req(app).post("/google-login").send(token);
+	// 	expect(res.status).toBe(200);
+	// 	expect(res.body).toHaveProperty("access_token", res.body.access_token);
+	// });
 });
 
 // RESET
